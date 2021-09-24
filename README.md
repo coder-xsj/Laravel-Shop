@@ -7,7 +7,7 @@
    - [x] 注册
    - [x] 登录
    - [x] 邮箱验证
-   - [ ] 新建收货地址
+   - [x] 新建收货地址
    - [ ] 修改收货地址
    - [ ] 删除收货地址
 3. 管理后台
@@ -32,6 +32,7 @@ npm i vue-loader
 但是还是有些报错的 --- 但是不影响
 
 2021-9-24 0:45
+
 开发完 登录与注册 功能
 
 解决了 nginx 中除首页外都不能访问问题
@@ -48,3 +49,24 @@ location / {
 ```dockerfile
 docker run --name mailhog -p 1025:1025 -p 8025:8025 -d mailhog/mailhog
 ```
+
+然后今天访问了老半天的 `larabbs.test`， 说怎么一直无法响应，还搜了半天 phpStudy 部署 laravel8 无法访问
+
+今天被一个 `.default` 给坑了
+app.js 引入 vue 组件 得加上 `.default`
+```
+window.Vue = require('vue').default;
+```
+
+然后在 `js/components/SelectDistrict.js` 的 `$emit` 方法 方括号位置没打对
+```
+this.$emit('change', [this.provinces[this.provinceId], this.cities[this.cityId], this.districts[this.districtId]]);
+```
+写成
+```
+this.$emit('change', [this.provinces[this.provinceId]], this.cities[this.cityId], this.districts[this.districtId]);
+```
+
+2021-9-25 0:18
+
+今天开发完 地址列表与添加
