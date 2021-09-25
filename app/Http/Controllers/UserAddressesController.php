@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class UserAddressesController extends Controller
 {
-    //
     public function index(Request $request) {
         return view('user_addresses.index', [
+            // 这里得细琢磨一下
            'addresses' => $request->user()->addresses,
         ]);
     }
@@ -37,6 +37,29 @@ class UserAddressesController extends Controller
             'contact_name',
             'contact_phone',
         ]));
+        return redirect()->route('user_addresses.index');
+    }
+
+    public function edit(UserAddress $userAddress) {
+        return view('user_addresses.create_and_edit', ['address' => $userAddress]);
+    }
+
+    /**
+     * @param UserAddress $userAddress
+     * @param UserAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UserAddress $userAddress, UserAddressRequest $request) {
+       $userAddress->update($request->only([
+           'province',
+           'city',
+           'district',
+           'address',
+           'zip',
+           'contact_name',
+           'contact_phone',
+       ]));
+
         return redirect()->route('user_addresses.index');
     }
 }
