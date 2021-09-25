@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Laravel-admin',
+    'name' => 'Laravel Shop',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>Laravel</b> Shop',
 
     /*
     |--------------------------------------------------------------------------
@@ -57,11 +57,11 @@ return [
     |
     */
     'route' => [
-
+        // 路由前缀
         'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
-
+        // 控制器命名空间前缀
         'namespace' => 'App\\Admin\\Controllers',
-
+        // 默认中间件列表
         'middleware' => ['web', 'admin'],
     ],
 
@@ -84,8 +84,9 @@ return [
     |
     | Html title for all pages.
     |
+    | 页面标题
     */
-    'title' => 'Admin',
+    'title' => 'Laravel Shop Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +94,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | If your page is going to be accessed via https, set it to `true`.
-    |
+    | 是否使用 https
     */
     'https' => env('ADMIN_HTTPS', false),
 
@@ -112,7 +113,7 @@ return [
 
         'controller' => App\Admin\Controllers\AuthController::class,
 
-        'guard' => 'admin',
+//        'guard' => 'admin',
 
         'guards' => [
             'admin' => [
@@ -129,21 +130,26 @@ return [
         ],
 
         // Add "remember me" to login form
+        // 页面中是否展示 记住我 登录选项
         'remember' => true,
 
         // Redirect to the specified URI when user is not authorized.
+        // 登录页面 url
         'redirect_to' => 'auth/login',
 
         // The URIs that should be excluded from authorization.
+        // 无需用户认证即可访问的地址
         'excepts' => [
             'auth/login',
             'auth/logout',
+            '_handle_action_',
         ],
     ],
 
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin upload setting
+    | 文件上传设置
     |--------------------------------------------------------------------------
     |
     | File system configuration for form upload files and images, including
@@ -153,7 +159,8 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
+//        'disk' => 'admin',
+        'disk' => 'public',
 
         // Image and file upload path under the disk above.
         'directory' => [
@@ -165,6 +172,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin database settings
+    | 数据库设置
     |--------------------------------------------------------------------------
     |
     | Here are database settings for laravel-admin builtin model & tables.
@@ -173,25 +181,31 @@ return [
     'database' => [
 
         // Database connection for following tables.
+        // 数据库连接名称，留空即可
         'connection' => '',
 
         // User tables and model.
+        // 管理员用户表及模型
         'users_table' => 'admin_users',
         'users_model' => Encore\Admin\Auth\Database\Administrator::class,
 
         // Role table and model.
+        // 角色表及模型
         'roles_table' => 'admin_roles',
         'roles_model' => Encore\Admin\Auth\Database\Role::class,
 
         // Permission table and model.
+        // 权限表及模型
         'permissions_table' => 'admin_permissions',
         'permissions_model' => Encore\Admin\Auth\Database\Permission::class,
 
         // Menu table and model.
+        // 菜单表及模型
         'menu_table' => 'admin_menu',
         'menu_model' => Encore\Admin\Auth\Database\Menu::class,
 
         // Pivot table for table above.
+        // 多对多关联中间表
         'operation_log_table'    => 'admin_operation_log',
         'user_permissions_table' => 'admin_user_permissions',
         'role_users_table'       => 'admin_role_users',
@@ -202,6 +216,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | User operation log setting
+    | 操作日志设置
     |--------------------------------------------------------------------------
     |
     | By setting this option to open or close operation log in laravel-admin.
@@ -213,6 +228,7 @@ return [
 
         /*
          * Only logging allowed methods in the list
+         * 只记录以下类型的请求
          */
         'allowed_methods' => ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'],
 
@@ -221,6 +237,7 @@ return [
          *
          * All method to path like: admin/auth/logs
          * or specific method to path like: get:admin/auth/logs.
+         * 不记录日志的路由
          */
         'except' => [
             'admin/auth/logs*',
@@ -230,6 +247,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Indicates whether to check route permission.
+    | 路由是否检查权限
     |--------------------------------------------------------------------------
     */
     'check_route_permission' => true,
@@ -237,6 +255,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Indicates whether to check menu roles.
+    | 菜单是否检查权限
     |--------------------------------------------------------------------------
     */
     'check_menu_roles'       => true,
@@ -249,11 +268,12 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => '/vendor/laravel-admin/AdminLTE/dist/img/default-avatar.jpg',
 
     /*
     |--------------------------------------------------------------------------
     | Admin map field provider
+    | 地图组件供应商
     |--------------------------------------------------------------------------
     |
     | Supported: "tencent", "google", "yandex".
@@ -264,6 +284,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Application Skin
+    | 页面风格
     |--------------------------------------------------------------------------
     |
     | This value is the skin of admin pages.
@@ -275,11 +296,12 @@ return [
     |    "skin-red", "skin-red-light", "skin-black", "skin-black-light".
     |
     */
-    'skin' => 'skin-blue-light',
+    'skin' => 'skin-black-light',
 
     /*
     |--------------------------------------------------------------------------
     | Application layout
+    | 后台布局
     |--------------------------------------------------------------------------
     |
     | This value is the layout of admin pages.
@@ -294,12 +316,13 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Login page background image
+    | 登录背景图
     |--------------------------------------------------------------------------
     |
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => '',
+    'login_background_image' => '/vendor/laravel-admin/AdminLTE/dist/img/bg.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -343,11 +366,13 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Enable/Disable assets minify
+    | 压缩资源文件
     |--------------------------------------------------------------------------
     */
     'minify_assets' => [
 
         // Assets will not be minified.
+        // 不需要被压缩的资源
         'excepts' => [
 
         ],
@@ -357,6 +382,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Enable/Disable sidebar menu search
+    | 启用菜单搜索
     |--------------------------------------------------------------------------
     */
     'enable_menu_search' => true,
@@ -364,13 +390,15 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Alert message that will displayed on top of the page.
+    | 顶部警告信息
     |--------------------------------------------------------------------------
     */
-    'top_alert' => '',
+    'top_alert' => '你的网站被黑了',
 
     /*
     |--------------------------------------------------------------------------
     | The global Grid action display class.
+    | 表格操作展示样式
     |--------------------------------------------------------------------------
     */
     'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
@@ -378,6 +406,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Extension Directory
+    | 扩展所在的目录
     |--------------------------------------------------------------------------
     |
     | When you use command `php artisan admin:extend` to generate extensions,
@@ -388,6 +417,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Settings for extensions.
+    | 扩展设置
     |--------------------------------------------------------------------------
     |
     | You can find all available extensions here
