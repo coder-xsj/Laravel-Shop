@@ -62,4 +62,16 @@ class UserAddressesController extends Controller
 
         return redirect()->route('user_addresses.index');
     }
+
+    /**
+     * @param UserAddress $userAddress
+     * @return \Illuminate\Http\RedirectResponse
+     * @function 删除地址
+     */
+    public function destroy(UserAddress $userAddress) {
+        $userAddress->delete();
+        // return redirect()->route('user_addresses.index');
+        // 因为改为 sweetalert ajax 删除了，所以这里返回空数组，不然会异常 405 (Method Not Allowed)
+        return [];
+    }
 }

@@ -23,16 +23,18 @@
             <tbody>
             @foreach($addresses as $address)
               <tr>
-
                 <td>{{ $address->contact_name }}</td>
                 <td>{{ $address->full_address }}</td>
                 <td>{{ $address->zip }}</td>
                 <td>{{ $address->contact_phone }}</td>
                 <td>
                   <a href="{{ route('user_addresses.edit', ['userAddress' => $address->id]) }}" class="btn btn-primary">修改</a>
-                  <button class="btn btn-danger">删除</button>
+{{--                  <form action="{{ route('user_addresses.destroy', ['userAddress' => $address->id]) }}" method="post" style="display: inline-block">--}}
+{{--                    {{ csrf_field() }}--}}
+{{--                    {{ @method_field('DELETE') }}--}}
+                    <button class="btn btn-danger btn-del-address" type="button" data-id="{{ $address->id }}">删除</button>
+{{--                  </form>--}}
                 </td>
-
               </tr>
             @endforeach
             </tbody>
@@ -42,4 +44,32 @@
     </div>
   </div>
 
+  @section('scriptsAlertJs')
+    <script>
+     $(function () {
+        $('.btn-del-address').click(function () {
+          // data-id 拿到 --- 不理解
+          var id = $(this).data('id')
+          // 调用 sweetalert
+          swal({
+            title: '确定要删除该地址吗？',
+            icon: 'warning',
+            buttons: ['取消', '确定'],
+            dangerMode: true,
+          })
+            // 用户点击按钮后会触发这个回调函数
+          .then(function (willDelete) {
+            if (!willDelete) {
+              return;
+            }
+            // 调用删除接口，用 id 来拼接出请求的 url
+            axios.delete('/user_addresses/' + id)
+              .then(function () {
+                location.reload();
+              })
+          });
+        });
+     });
+    </script>
+  @endsection
 @endsection

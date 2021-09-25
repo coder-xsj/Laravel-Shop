@@ -2420,6 +2420,11 @@ es-module-lexer@^0.7.1:
   resolved "https://registry.nlark.com/es-module-lexer/download/es-module-lexer-0.7.1.tgz?cache=0&sync_timestamp=1632013002926&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fes-module-lexer%2Fdownload%2Fes-module-lexer-0.7.1.tgz#c2c8e0f46f2df06274cdaf0dd3f3b33e0a0b267d"
   integrity sha1-wsjg9G8t8GJ0za8N0/OzPgoLJn0=
 
+es6-object-assign@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/es6-object-assign/download/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
+  integrity sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=
+
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.nlark.com/escalade/download/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
@@ -4412,6 +4417,11 @@ process@^0.11.10:
   resolved "https://registry.nlark.com/process/download/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
+promise-polyfill@^6.0.2:
+  version "6.1.0"
+  resolved "https://registry.npm.taobao.org/promise-polyfill/download/promise-polyfill-6.1.0.tgz?cache=0&sync_timestamp=1615986239062&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpromise-polyfill%2Fdownload%2Fpromise-polyfill-6.1.0.tgz#dfa96943ea9c121fca4de9b5868cb39d3472e057"
+  integrity sha1-36lpQ+qcEh/KTem1hoyznTRy4Fc=
+
 proxy-addr@~2.0.5:
   version "2.0.7"
   resolved "https://registry.nlark.com/proxy-addr/download/proxy-addr-2.0.7.tgz#f19fe69ceab311eeb94b42e70e8c2070f9ba1025"
@@ -5110,6 +5120,14 @@ svgo@^2.3.0:
     csso "^4.2.0"
     nanocolors "^0.1.12"
     stable "^0.1.8"
+
+sweetalert@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.npm.taobao.org/sweetalert/download/sweetalert-2.1.2.tgz#010baaa80d0dbdc86f96bfcaa96b490728594b79"
+  integrity sha1-AQuqqA0Nvchvlr/KqWtJByhZS3k=
+  dependencies:
+    es6-object-assign "^1.1.0"
+    promise-polyfill "^6.0.2"
 
 tapable@^2.1.1, tapable@^2.2.0:
   version "2.2.1"

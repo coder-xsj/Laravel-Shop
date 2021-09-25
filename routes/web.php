@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('user_addresses/{userAddress}', 'UserAddressesController@edit')->name('user_addresses.edit');
     # 修改地址方法
     Route::put('user_addresses/{userAddress}', 'UserAddressesController@update')->name('user_addresses.update');
+    # 删除地址方法
+    Route::delete('user_addresses/{userAddress}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 });
 
 
