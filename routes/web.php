@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PagesController@root')->name('root');
+
 
 # 启用邮箱验证路由
 Auth::routes(['verify' => true]);
@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('user_addresses/{userAddress}', 'UserAddressesController@update')->name('user_addresses.update');
     # 删除地址方法
     Route::delete('user_addresses/{userAddress}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
+    # 首页直接跳转到商品页面
+    Route::redirect('/', '/products')->name('root');
     # 商品列表页面
     Route::get('products', 'ProductsController@index')->name('products.index');
 });
