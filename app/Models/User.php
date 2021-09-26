@@ -48,4 +48,13 @@ class User extends Authenticatable implements MustVerifyEmail
         // 一个用户可以拥有多个地址
         return $this->hasMany(UserAddress::class);
     }
+
+    public function favoriteProducts() {
+        // belongsToMany 多对多的关联
+        // withTimestamps() 代表中间表带有时间戳字段
+        // 默认排序是 创建时间 降序
+        return $this->belongsToMany(Product::class, 'user_favorite_products')
+            ->withTimestamps()
+            ->orderBy('user_favorite_products.created_at', 'desc');
+    }
 }

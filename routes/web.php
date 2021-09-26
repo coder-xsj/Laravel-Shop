@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('user_addresses/{userAddress}', 'UserAddressesController@update')->name('user_addresses.update');
     # 删除地址方法
     Route::delete('user_addresses/{userAddress}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
+    # 收藏商品方法
+    Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
+    # 取消收藏商品方法
+    Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
 
 
 
