@@ -23,7 +23,7 @@ Route::redirect('/', '/products')->name('root');
 # 商品列表页面
 Route::get('products', 'ProductsController@index')->name('products.index');
 # 商品详情页面
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+Route::get('products/{product}', 'ProductsController@show')->name('products.show')->where(['product' => '[0-9]+']);
 
 # auth 中间件代表需要登录，verified中间件代表需要经过邮箱验证
 Route::group(['middleware' => ['auth', 'verified']], function () {
@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     # 取消收藏商品方法
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    # 收藏商品列表页面
+    Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 
 
 
