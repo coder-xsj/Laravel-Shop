@@ -14,6 +14,7 @@
               <th>商品信息</th>
               <th>单价</th>
               <th>数量</th>
+              <th>总价</th>
               <th>操作</th>
             </tr>
             </thead>
@@ -42,6 +43,9 @@
                 <td><span class="price">￥{{ $item->productSku->price }}</span></td>
                 <td>
                   <input type="text" class="form-control form-control-sm amount" @if(!$item->productSku->product->on_sale) disabled @endif name="amount" value="{{ $item->amount }}">
+                </td>
+                <td>
+                  {{ $item->productSku->price * $item->amount}}
                 </td>
                 <td>
                   <button class="btn btn-sm btn-danger btn-remove">移除</button>
@@ -88,10 +92,11 @@
             var checked = $(this).prop('checked');
             // 获取所有 name=select 并且不带有 disabled 属性的勾选框
             // 对于已下架的商品，需要加上 :not([disabled]) 条件
-            $('input[name=select][type=checkbox]:not([disabled])').each(function () {
+            $('input[name=select][type=checkbox]:not([disabled])').prop('checked', checked);
+            // $('input[name=select][type=checkbox]:not([disabled])').each(function () {
               // 将其勾选状态设为与目标单选框一致
-              $(this).prop('checked', checked);
-            });
+              // $(this).prop('checked', checked);
+            // });
           });
         });
 
