@@ -122,7 +122,10 @@
             amount: $('.cart_amount input').val(),
           })
             .then(function () {
-              swal('成功加入购物车', '', 'success');
+              swal('成功加入购物车', '', 'success')
+                .then(function () {
+                  location.href = '{{ route('cart.index') }}';
+                });
             }, function (error) {
               if (error.response && error.response.status === 401) {
                 swal('请先登录', '', 'error').then(function () {
