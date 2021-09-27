@@ -53,7 +53,9 @@
               </tr>
             @endforeach
             </tbody>
+
           </table>
+          <span>用来结算总价的</span>
         </div>
       </div>
     </div>
