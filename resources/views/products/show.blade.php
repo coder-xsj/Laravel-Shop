@@ -81,7 +81,10 @@
           // 发起一个 post ajax 请求，url 为 后端 route() 生成
           axios.post('{{ route('products.favor', ['product' => $product->id]) }}')
             .then(function () {  // 请求成功回调
-              swal('操作成功', '', 'success');
+              swal('操作成功', '', 'success')
+                .then(function () {
+                  location.reload();
+              });
             }, function (error) {  // 请求失败回调
               // 401 代表未登录
               if (error.response && error.response.status === 401) {
@@ -139,7 +142,9 @@
                 });
                 html += '</div>';
                 swal({content: $(html)[0], icon: 'error'});
-              } else {
+              } else if (error.response.status  === 403) {
+                  swal('请先验证邮箱', '', 'error');
+              }  else {
                 // 系统挂了
                 swal('系统挂了', '', 'error');
               }
