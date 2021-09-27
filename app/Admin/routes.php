@@ -14,6 +14,10 @@ Route::group([
     $router->get('/', 'HomeController@index');
     # 用户管理页面
     $router->get('users', 'UsersController@index');
+//    # 创建用户页面
+//    $router->get('users/create', 'usersController@create');
+//    # 编辑用户页面
+//    $router->get('users/{id}/edit', 'usersController@edit');
     # 商品管理页面
     $router->get('products', 'ProductsController@index');
     # 创建商品页面

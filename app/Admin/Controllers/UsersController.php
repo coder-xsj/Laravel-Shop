@@ -20,6 +20,7 @@ class UsersController extends AdminController
     /**
      * Make a grid builder.
      * 决定列表页要展示哪些列
+     * @param $input
      * @return Grid
      */
     protected function grid()
@@ -37,7 +38,7 @@ class UsersController extends AdminController
         $grid->created_at('注册时间');
 
         // 不在页面显示 `新建` 按钮
-        $grid->disableCreateButton();
+//        $grid->disableCreateButton();
         // 不在页面显示 `编辑` 按钮
 //        $grid->disableActions();
         // 禁用批量删除按钮
@@ -46,6 +47,8 @@ class UsersController extends AdminController
                 $batch->disableDelete();
             });
         });
+        // 快捷搜索按钮
+        $grid->quickSearch('id', 'name', 'email');
 
         return $grid;
     }
@@ -82,12 +85,11 @@ class UsersController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->text('name', __('Name'));
-        $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-        $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
+        $form->text('name', '用户名')->rules('required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/');
+        $form->password('password', '用户密码')->rules('between:6,20');
+        $form->saving(function () {
 
+        });
         return $form;
     }
 }

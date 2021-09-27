@@ -40,6 +40,8 @@ class ProductsController extends AdminController
                 $batch->disableDelete();
             });
         });
+        // 快捷搜索按钮
+        $grid->quickSearch('id', 'title', 'description', 'rating', 'price');
         return $grid;
     }
 
