@@ -96,7 +96,7 @@
                 swal(error.response.data.msg ? error.response.data.msg : error.response.data.message, '', 'error');
               } else {
                 // 系统挂了
-                swal('系统错误', '', 'error')
+                swal('系统挂了', '', 'error');
               }
             });
         });
@@ -109,6 +109,40 @@
                 .then(function () {
                   location.reload();
                 });
+            });
+        });
+
+        // 监听 加入购物车 按钮的 click 事件
+        $('.btn-add-to-cart').click(function () {
+          axios.post('{{ route('cart.add') }}', {
+            sku_id: $('label.active input[name=skus]').val(),
+            amount: $('.cart_amount input').val(),
+          })
+            .then(function () {
+              swal('成功加入购物车', '', 'success');
+            }, function (error) {
+              if (error.response && error.response.status === 401) {
+                swal('请先登录', '', 'error').then(function () {
+                  // 跳转到 登录 界面
+                  // 此处埋坑
+                  // 可以判断未登录，可以存储到 Cookies，登录后购物车、收藏 Cookies 转移到数据库呗
+                  window.location = '{{ route('login') }}';
+                });
+                // http 状态码为 422 代表用户输入校验失败
+              } else if (error.response.status === 422) {
+                // 这下面是干啥
+                var html = '<div>';
+                _.each(error.response.data.errors, function (errors) {
+                  _.each(errors, function (error) {
+                    html += error+'<br>';
+                  })
+                });
+                html += '</div>';
+                swal({content: $(html)[0], icon: 'error'});
+              } else {
+                // 系统挂了
+                swal('系统挂了', '', 'error');
+              }
             });
         });
       });
