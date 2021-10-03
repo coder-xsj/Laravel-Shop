@@ -158,28 +158,28 @@
               });
             });
 
-            {{--axios.post('{{ route('orders.store') }}', req)--}}
-            {{--  .then(function (response) {--}}
-            {{--    swal('订单提交成功', '', 'success');--}}
-            {{--  }, function (error) {--}}
-            {{--    if (error.response.status === 422) {--}}
-            {{--      // http 状态码为 422 代表用户输入校验失败--}}
-            {{--      var html = '<div>';--}}
-            {{--      _.each(error.response.data.errors, function (errors) {--}}
-            {{--        _.each(errors, function (error) {--}}
-            {{--          html += error + '<br>';--}}
-            {{--        })--}}
-            {{--      });--}}
-            {{--      html += '</div>';--}}
-            {{--      swal({content: $(html)[0], icon: 'error'});--}}
-            {{--    } else if (error.response.status === 403) {--}}
-            {{--      swal('请先验证邮箱', '', 'error');--}}
-            {{--    } else {--}}
-            {{--      // 系统挂了--}}
-            {{--      swal('系统挂了', '', 'error');--}}
-            {{--    }--}}
+            axios.post('{{ route('orders.store') }}', req)
+              .then(function (response) {
+                swal('订单提交成功', '', 'success');
+              }, function (error) {
+                if (error.response.status === 422) {
+                  // http 状态码为 422 代表用户输入校验失败
+                  var html = '<div>';
+                  _.each(error.response.data.errors, function (errors) {
+                    _.each(errors, function (error) {
+                      html += error + '<br>';
+                    })
+                  });
+                  html += '</div>';
+                  swal({content: $(html)[0], icon: 'error'});
+                } else if (error.response.status === 403) {
+                  swal('请先验证邮箱', '', 'error');
+                } else {
+                  // 系统挂了
+                  swal('系统挂了', '', 'error');
+                }
 
-            {{--  });--}}
+              });
           });
 
         });
