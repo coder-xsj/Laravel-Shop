@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\ProductSku;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class OrderRequest extends FormRequest
+class OrderRequest extends request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,6 +28,7 @@ class OrderRequest extends FormRequest
             'address_id' => [
                 'required',
                 // 判断用户提交的地址 ID 是否存在于数据库并且属于当前用户
+                // 防止 恶意用户可以用不同的地址 ID 不断提交订单来遍历出平台所有用户的收货地址
                 Rule::exists('user_addresses', 'id')->where('user_id', $this->user()->id),
             ],
             'items' => ['required', 'array'],

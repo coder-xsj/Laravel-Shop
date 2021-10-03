@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
-use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\ProductSku;
-use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\Order;
 use Carbon\Carbon;
@@ -36,6 +34,7 @@ class OrdersController extends Controller
             $order->user()->associate($user);
             // 写入数据库
             $order->save();
+
             $totalAmount = 0;
             $items = $request->input('items');
             foreach ($items as $data) {
@@ -43,13 +42,13 @@ class OrdersController extends Controller
                 // 创建一个 OrderItem 并直接与当前订单关联
                 $item = $order->items()->make([
                     'amount' => $data['amount'],
-                    'price' => $data['price'],
+                    'price' => $sku->price,
                 ]);
                 $item->product()->associate($sku->product_id);
                 $item->productSku()->associate($sku);
                 $item->save();
                 $totalAmount += $sku->price * $data['amount'];
-                if ($sku->decreaseStock($data['amount'] <= 0)) {
+                if ($sku->decreaseStock($data['amount']) <= 0) {
                     // 如果减库存失败则抛出异常
                     // orders 和 orderItems 数据会回滚
                     throw new InvalidRequestException('该商品库存不足');
