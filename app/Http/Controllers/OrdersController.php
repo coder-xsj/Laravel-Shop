@@ -8,9 +8,10 @@ use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Models\Order;
 use Carbon\Carbon;
+use App\Jobs\CloseOrder;
+
 class OrdersController extends Controller
 {
-    //
     public function store(OrderRequest $request) {
         $user = $request->user();
         // 开启一个事务
@@ -63,7 +64,8 @@ class OrdersController extends Controller
 
             return $order;
         });
-
+        // 在创建订单之后触发这个任务
+        $this->dispatch(new CloseOrder($order, config('app.order.ttl')));
         return $order;
     }
 }
