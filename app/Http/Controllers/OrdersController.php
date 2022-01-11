@@ -65,6 +65,7 @@ class OrdersController extends Controller
             return $order;
         });
         // 在创建订单之后触发这个任务
+//        dd(config('app.order_ttl'));
         $this->dispatch(new CloseOrder($order, config('app.order.ttl')));
         return $order;
     }
