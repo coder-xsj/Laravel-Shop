@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Order;
 
+// 代表这个类需要被放到队列中执行，而不是触发时立即执行
 class CloseOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -20,7 +21,7 @@ class CloseOrder implements ShouldQueue
     {
         $this->order = $order;
         // 设置延迟的时间，delay() 方法的参数代表多少秒之后执行
-        $this->delay = $delay;
+        $this->delay($delay);
     }
 
     // 定义这个任务类具体的执行逻辑
@@ -32,7 +33,8 @@ class CloseOrder implements ShouldQueue
         if ($this->order->paid_at) {
             return;
         }
-        \DB::transaction(function () {
+        // 通过事务执行 sql
+        \DB::transaction(function() {
             // 将订单的 closed 字段标记为 true，即关闭订单
             $this->order->update(['closed' => true]);
             // 循环遍历订单中的商品 SKU，将订单中的数量加回到 SKU 的库存中去
