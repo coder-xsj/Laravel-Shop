@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\Request;
 use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Models\Order;
@@ -12,6 +13,17 @@ use App\Jobs\CloseOrder;
 
 class OrdersController extends Controller
 {
+    public function index(Request $request) {
+        $orders = Order::query()
+            // with 方法加载，防止 n + 1
+            ->with(['items.product', 'items.productSku'])
+            ->where('user_id', $request->user()->id)
+            ->paginate();
+
+//        dd($orders);
+        return view('orders.index', ['orders' => $orders]);
+    }
+
     public function store(OrderRequest $request) {
         $user = $request->user();
         // 开启一个事务
