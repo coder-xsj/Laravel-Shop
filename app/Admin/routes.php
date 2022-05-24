@@ -11,7 +11,7 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
     # 后台
-    $router->get('/', 'HomeController@index');
+    $router->get('/', 'HomeController@index')->name('index');
     # 用户管理页面
     $router->get('users', 'UsersController@index');
 //    # 创建用户页面
