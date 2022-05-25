@@ -6,23 +6,25 @@ use App\Http\Requests\UserAddressRequest;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 
-
 class UserAddressesController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         return view('user_addresses.index', [
             // 这里得细琢磨一下
            'addresses' => $request->user()->addresses,
         ]);
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         return view('user_addresses.create_and_edit', [
             'address' => new UserAddress()
         ]);
     }
 
-    public function store(UserAddressRequest $request) {
+    public function store(UserAddressRequest $request)
+    {
         // 会自动调用 UserAddressRequest 中 rules 方法
         // $request->user() 获取当前登录的用户
         // user()->addresses() 获取当前用户与地址的关联关系
@@ -40,7 +42,8 @@ class UserAddressesController extends Controller
         return redirect()->route('user_addresses.index');
     }
 
-    public function edit(UserAddress $userAddress) {
+    public function edit(UserAddress $userAddress)
+    {
         return view('user_addresses.create_and_edit', ['address' => $userAddress]);
     }
 
@@ -49,8 +52,9 @@ class UserAddressesController extends Controller
      * @param UserAddressRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserAddress $userAddress, UserAddressRequest $request) {
-       $userAddress->update($request->only([
+    public function update(UserAddress $userAddress, UserAddressRequest $request)
+    {
+        $userAddress->update($request->only([
            'province',
            'city',
            'district',
@@ -68,7 +72,8 @@ class UserAddressesController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @function 删除地址
      */
-    public function destroy(UserAddress $userAddress) {
+    public function destroy(UserAddress $userAddress)
+    {
         $userAddress->delete();
         // return redirect()->route('user_addresses.index');
         // 因为改为 sweetalert ajax 删除了，所以这里返回空数组，不然会异常 405 (Method Not Allowed)

@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         // 创建一个查询构造器
         $builder = Product::query()->where('on_sale', true);
         if ($search = $request->input('search', '')) {
@@ -16,10 +17,10 @@ class ProductsController extends Controller
             // 模糊搜索商品标题、商品详情、SKU 标题、SKU 描述
             // 传入 匿名函数
             $builder->where(function ($query) use ($like) {
-               $query->where('title', 'like', $like)
+                $query->where('title', 'like', $like)
                     ->orWhere('description', 'like', $like)
                     ->orWhereHas('skus', function ($query) use ($like) {
-                       $query->where('title', 'like', $like)
+                        $query->where('title', 'like', $like)
                             ->orWhere('description', 'like', $like);
                     });
             });
@@ -63,7 +64,8 @@ class ProductsController extends Controller
      * @param Request $request
      * 商品详情页
      */
-    public function show(Product $product, Request $request) {
+    public function show(Product $product, Request $request)
+    {
         if (!$product->on_sale) {
             throw new InvalidRequestException('商品未上架');
         }
@@ -85,7 +87,8 @@ class ProductsController extends Controller
      * @return array
      * 收藏商品
      */
-    public function favor(Product $product, Request $request) {
+    public function favor(Product $product, Request $request)
+    {
         $user = $request->user();
         // 查询用户是否已收藏该商品，有则不处理
         if ($user->favoriteProducts()->find($product->id)) {
@@ -102,14 +105,16 @@ class ProductsController extends Controller
      * @return array
      * 取消收藏商品
      */
-    public function disfavor(Product $product, Request $request) {
+    public function disfavor(Product $product, Request $request)
+    {
         $user = $request->user();
         $user->favoriteProducts()->detach($product);
 
         return [];
     }
 
-    public function favorites(Request $request) {
+    public function favorites(Request $request)
+    {
         $favorites = $request->user()->favoriteProducts()->paginate(16);
 
         return view('products.favorites', ['favorites' => $favorites]);

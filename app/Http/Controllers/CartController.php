@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     // 购物车列表
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // with(['productSku.product']) 方法用来预加载购物车里的商品和 SKU 信息
         //  Laravel 还支持通过 . 的方式加载多层级的关联关系，这里我们就通过 . 提前加载了与商品 SKU 关联的商品
         $cartItems = $request->user()->cartItems()->with(['productSku.product'])->get();
@@ -25,7 +26,8 @@ class CartController extends Controller
      * @return array
      * 添加购物车功能
      */
-    public function add(AddCartRequest $request) {
+    public function add(AddCartRequest $request)
+    {
         $user = $request->user();
         $skuId = $request->input('sku_id');
         $amount = $request->input('amount');
@@ -48,10 +50,10 @@ class CartController extends Controller
         return [];
     }
     // 删除购物车中商品
-    public function remove(ProductSku $sku, Request $request) {
+    public function remove(ProductSku $sku, Request $request)
+    {
         $request->user()->cartItems()->where('product_sku_id', $sku->id)->delete();
 
         return [];
     }
-
 }

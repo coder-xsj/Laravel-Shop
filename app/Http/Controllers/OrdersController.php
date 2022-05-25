@@ -13,7 +13,8 @@ use App\Jobs\CloseOrder;
 
 class OrdersController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $orders = Order::query()
             // with 方法加载，防止 n + 1
             ->with(['items.product', 'items.productSku'])
@@ -24,10 +25,11 @@ class OrdersController extends Controller
         return view('orders.index', ['orders' => $orders]);
     }
 
-    public function store(OrderRequest $request) {
+    public function store(OrderRequest $request)
+    {
         $user = $request->user();
         // 开启一个事务
-        $order = \DB::transaction(function () use ($user, $request){
+        $order = \DB::transaction(function () use ($user, $request) {
             $address = UserAddress::find($request->input('address_id'));
             // 更新此地址的最后使用时间
             $address->update(['last_used_at' => Carbon::now()]);
@@ -82,7 +84,8 @@ class OrdersController extends Controller
         return $order;
     }
 
-    public function show(Order $order, Request $request) {
+    public function show(Order $order, Request $request)
+    {
         $this->authorize('own', $order);
         // load 方法延迟预加载
         return view('orders.show', ['order' => $order->load(['items.productSku', 'items.product'])]);
