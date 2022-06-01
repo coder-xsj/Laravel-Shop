@@ -24,6 +24,14 @@ Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
 # 商品详情页面
 Route::get('products/{product}', 'ProductsController@show')->name('products.show')->where(['product' => '[0-9]+']);
+# 测试支付路由
+Route::get('alipay', function () {
+    return app('alipay')->web([
+        'out_trade_no' => time(),
+        'total_amount' => 1,
+        'subject' => '支付订单',
+    ]);
+});
 
 # auth 中间件代表需要登录，verified中间件代表需要经过邮箱验证
 Route::group(['middleware' => ['auth', 'verified']], function () {
