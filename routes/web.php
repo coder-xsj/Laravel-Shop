@@ -32,7 +32,9 @@ Route::get('alipay', function () {
         'subject' => '支付订单',
     ]);
 });
-
+#
+Route::get('ts', 'DigitalChina@TS')->name('digital.ts');
+Route::post('ts', 'DigitalChina@TS')->name('digital.ts');
 # auth 中间件代表需要登录，verified中间件代表需要经过邮箱验证
 Route::group(['middleware' => ['auth', 'verified']], function () {
     # 地址列表页面
@@ -65,6 +67,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     # 订单详情页面
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    #
+    Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
+
 });
 
 

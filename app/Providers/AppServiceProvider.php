@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use  Illuminate\Support\Facades\Schema; // At the top of your file
 use Monolog\Logger;
 use Yansongda\Pay\Pay;
 
@@ -51,5 +52,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         \Illuminate\Pagination\Paginator::useBootstrap();
+        Schema::defaultStringLength(191);
     }
 }

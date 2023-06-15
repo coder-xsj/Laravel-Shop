@@ -52,7 +52,7 @@ class AddCartRequest extends FormRequest
 
     public function messages() {
         return [
-            'sku_id.required' => '请选择商品',
+            'sku_id.required' => '当前行为存在违规操作',
         ];
     }
 

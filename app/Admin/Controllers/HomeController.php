@@ -3,7 +3,9 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Encore\Admin\Controllers\Dashboard;
+use Encore\Admin\Form;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
@@ -12,6 +14,7 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
+        $form = new Form(new Product());
         return $content
             ->title('Dashboard')
             ->description('Description...')
@@ -29,6 +32,9 @@ class HomeController extends Controller
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::dependencies());
                 });
+
+
             });
+
     }
 }

@@ -108,7 +108,7 @@
         $('.btn-disfavor').click(function () {
           axios.delete('{{ route('products.disfavor', ['product' => $product->id]) }}')
             .then(function () {
-              swal('操作成功', '', 'success')
+              swal('最终解释权归本人所有', '', 'success')
                 .then(function () {
                   location.reload();
                 });

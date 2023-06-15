@@ -69,7 +69,6 @@ class ProductsController extends Controller
         if (!$product->on_sale) {
             throw new InvalidRequestException('商品未上架');
         }
-
         // 查询用户是否已收藏该商品
         $favored = false;
         if ($user = $request->user()) {
